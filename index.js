@@ -10,15 +10,15 @@ const rawData = fs.readFileSync(filePath)
 let data = JSON.parse(rawData)
 
 const loadDb = async () => await orama.create({
-        schema: {
-            title: 'string',
-            year: 'number',
-            extract: 'string',
-            thumbnail: 'string',
-        },
-    });
+    schema: {
+        title: 'string',
+        year: 'number',
+        extract: 'string',
+        thumbnail: 'string',
+    },
+});
 
-const insertData = async ( movieDB, data ) => await orama.insertMultiple(movieDB, data, 500);
+const insertData = async (movieDB, data) => await orama.insertMultiple(movieDB, data, 500);
 
 const logger = (searchOptions, searchResult) => {
 
@@ -26,7 +26,7 @@ const logger = (searchOptions, searchResult) => {
     content += "Search options" + BREAKLINE;
     content += JSON.stringify(searchOptions, null, 2) + BREAKLINE;
 
-    content += `Movies found (${searchResult.count})`  + BREAKLINE;
+    content += `Movies found (${searchResult.count})` + BREAKLINE;
 
     searchResult.hits.forEach((element, i) => {
         content += `#${i} ${BREAKLINE}`
@@ -35,11 +35,11 @@ const logger = (searchOptions, searchResult) => {
 
     // YYYY-MM-DD.txt
     const fileName = new Date().toISOString().split('T')[0] + '.txt';
-    const filePath = path.join(__dirname, `/result/${fileName}` );
+    const filePath = path.join(__dirname, `/result/${fileName}`);
     fs.appendFile(filePath, content, err => {
         if (err) console.error(err);
         // file written successfully
-      });
+    });
 
 }
 
